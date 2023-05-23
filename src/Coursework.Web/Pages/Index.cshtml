@@ -1,0 +1,64 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Street sights";
+}
+
+<div class="container">
+    <div class="desc1">
+        <div class="row align-items-center">
+            <div class="col-lg-auto">
+                <div class="desc1-header">
+                    О проекте
+                </div>
+                <div class="desc1-separator"></div>
+                <div class="desc1-text">
+                    Перед вами цифровой гид по достопримечательностям Казани. Сервис содержит любимые места жителей и гостей города. С ним легко выбрать, где провести выходные и что посмотреть в городе
+                </div>
+            </div>
+            <div class="col">
+                <div class="desc1-image" style="background-image: url(img/pic1.jpg);"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="desc2" style="background-image: url(img/pic2.png);">
+    <div class="container row align-items-center">
+        <div class="col-sm-auto">
+            <div class="desc2-header">
+                Добавляйте и редактируйте карточки мест
+            </div>
+            <div class="desc2-text">
+                Вы сами следите за актуальностью информации на сайте. Если вдруг место выглядит совсем не так, как описано у нас, то вы можете сами отредактировать описание или добавить актуальные фотографии и их увидят все
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="desc3">
+        <div class="row justify-content-center">
+            <div class="col-sm-auto">
+                <div class="desc3-header">
+                    Места Казани
+                </div>
+                <div class="desc3-text">
+                    Если вы не нашли у нас какое-то место, то просто добавьте его сами, чтобы другие знали о его существовании
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            @foreach (var type in Model.Types)
+            {
+                <div class="col-4" style="text-align: center; margin-bottom: 50px;">
+                    <img class="ico" src="@type.Logo.Path" alt="">
+                    <div class="desc3-stat-header">
+                        @type.Name
+                    </div>
+                    <div class="desc3-stat-text">
+                        Мест: @type.Places.Count
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

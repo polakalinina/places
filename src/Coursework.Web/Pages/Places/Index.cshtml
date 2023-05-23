@@ -1,0 +1,95 @@
+﻿@page
+@model Coursework.Web.Pages.Places.Index
+@{
+    ViewData["Title"] = "Места";
+}
+
+<div class="places">
+  <div class="container">
+    <div class="filters">
+      <form method="POST">
+        <select name="districtId" class="district custom-select">
+          @if (Model.ChoosenDistrict is null)
+          {
+            <option value="" selected>Все районы</option>
+            @foreach (var district in Model.Districts)
+            {
+              <option value="@district.Id">@district.Name</option>
+            }
+          }
+          else
+          {
+            <option value="">Все районы</option>
+            @foreach (var district in Model.Districts)
+            {
+              if (district.Id == Model.ChoosenDistrict.Id)
+              {
+                <option value="@district.Id" selected>@district.Name</option>
+              }
+              else
+              {
+                <option value="@district.Id">@district.Name</option>
+              }
+            }
+          }
+        </select>
+        <select name="typeId" class="type custom-select">
+          @if (Model.ChoosenType is null)
+          {
+            <option value="" selected>Все типы</option>
+            @foreach (var type in Model.Types)
+            {
+              <option value="@type.Id">@type.Name</option>
+            }
+          }
+          else
+          {
+            <option value="">Все типы</option>
+            @foreach (var type in Model.Types)
+            {
+              if (type.Id == Model.ChoosenType.Id)
+              {
+                <option value="@type.Id" selected>@type.Name</option>
+              }
+              else
+              {
+                <option value="@type.Id">@type.Name</option>
+              }
+            }
+          }
+        </select>
+        <button type="submit" class="filters-btn">Показать</button>
+      </form>
+    </div>
+    @foreach (var place in Model.Places)
+    {
+      <div class="places-list">
+        <div class="row">
+          <div class="col-5">
+            <img class="places-img" src="@place.Images.FirstOrDefault(image => image.IsMain)?.Path" alt="">
+          </div>
+          <div class="col-7">
+            <div class="desc-district">
+              @place.District.Name
+            </div>
+            <div class="desc-header">
+              <a asp-page="/Places/Details" asp-route-placeId="@place.Id">@place.Name</a>
+            </div>
+            <div class="desc-text">
+              @place.ShortDescription
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+    <div class="add-or-edit-btn-container">
+      <a asp-page="/Places/Create" class="add-or-edit-btn">
+        <table>
+          <tr>
+            <td>Добавить место</td>
+          </tr>
+        </table>
+      </a>
+    </div>
+  </div>
+</div>

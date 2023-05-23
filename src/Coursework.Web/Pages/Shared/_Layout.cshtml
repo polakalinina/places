@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=ed9ee632-4f57-4dd1-ad11-59fae15159cd&lang=ru_RU" type="text/javascript"></script>
+</head>
+<body>
+<div class="navbar-container navbar-normal">
+    <div class="container">
+        <nav class="navbar">
+            <a class="navbar-brand" asp-page="/Index">Street sights</a>
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/Places/Index">Места</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/Places/Create">Добавить место</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/OnMap">На карте</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="navbar-container navbar-mobile">
+    <nav class="navbar navbar-light navbar-expand-md">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" asp-page="/Index">Street sights</a>
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/Places/Index">Места</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/Places/Create">Добавить место</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-page="/Index">На карте</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+@RenderBody()
+
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,86 @@
+﻿@page
+@using System.Globalization
+@model Coursework.Web.Pages.Places.Details
+
+@{
+  ViewData["Title"] = Model.Place.ToString();
+
+  var mainImg = Model.Place.Images.First(image => image.IsMain);
+  var otherImgs = Model.Place.Images.Where(image => !image.IsMain);
+}
+
+<div class="place">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="main-img" id="mainImg" style="background-image: url(@mainImg.Path);"></div>
+        <div class="imgs" id="imgs" onload="init()">
+          <div class="mini-img" onclick="changeImage('@mainImg.Path')" style="background-image: url(@mainImg.Path);"></div>
+          @foreach (var img in otherImgs)
+          {
+            <div class="mini-img" onclick="changeImage('@img.Path')" style="background-image: url(@img.Path);"></div>
+          }
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="place-desc-header">
+          @Model.Place.Name
+        </div>
+        <div class="place-desc-text">
+          <p>Район: <a href="#">@Model.Place.District.Name</a></p>
+          <p>Тип: <a href="#">@Model.Place.Type.Name</a></p>
+          <p>Последнее обновление: @Model.Place.LastUpdate</p>
+          <div class="desc1-separator"></div>
+          @Model.Place.ShortDescription
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-7">
+        <div id="map" class="place-map"></div>
+      </div>
+      <div class="col-md-5">
+        <div class="place-desc-header">
+          Места рядом:
+        </div>
+        @foreach (var place in Model.ClosePlaces)
+        {
+          <div class="row close-place">
+            <div class="col close-place-image" style="background-image: url(@place.Images.First(image => image.IsMain).Path);"></div>
+            <div class="col close-place-text">
+              <a asp-page="/Places/Details" asp-route-placeId="@place.Id">@place.Name</a>
+            </div>
+          </div>
+        }
+      </div>
+      <div class="row place-edit align-items-center">
+        <div class="col-sm-7 place-edit-text">
+          Информация о состоянии места не совпадает с действительностью? Отредактируйте его сами!
+        </div>
+        <div class="col-sm-5">
+          <div class="add-btn-container">
+            <a href="edit.html" class="add-or-edit-btn">
+              <table>
+                <tr>
+                  <td>Редактировать</td>
+                </tr>
+              </table>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  ymaps.ready(init);
+  function init(){
+    let myMap = new ymaps.Map("map", {
+      center: [@Model.Place.Latitude.ToString("0.000000", CultureInfo.InvariantCulture), @Model.Place.Longitude.ToString("0.000000", CultureInfo.InvariantCulture)],
+      zoom: 16
+    });
+    let placemark = new ymaps.Placemark([@Model.Place.Latitude.ToString("0.000000", CultureInfo.InvariantCulture), @Model.Place.Longitude.ToString("0.000000", CultureInfo.InvariantCulture)], {}, {})
+    myMap.geoObjects.add(placemark);
+  }
+</script>

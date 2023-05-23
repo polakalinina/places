@@ -1,0 +1,52 @@
+﻿@page
+@using System.Globalization
+@model Coursework.Web.Pages.OnMap
+@{
+    ViewData["Title"] = "На карте";
+    Layout = "_Layout";
+
+    var i = 0;
+}
+
+<div class="container">
+    <div id="map" class="map"></div>
+</div>
+
+<script type="text/javascript">
+    ymaps.ready(init);
+    function init(){
+        let myMap = new ymaps.Map("map", {
+            center: [55.79717499, 49.10240174],
+            zoom: 11
+        });
+
+        let myGeoObjects = [];
+
+        @foreach (var place in Model.Places)
+        {
+            @: myGeoObjects[@i] = new ymaps.Placemark([@place.Latitude.ToString("0.000000", CultureInfo.InvariantCulture), @place.Longitude.ToString("0.000000", CultureInfo.InvariantCulture)], 
+            @: {
+            @:     balloonContentBody: [
+            @:     '<address>',
+            @:     '<p>',
+            @:     '<a class="place-link" href="/Places/Details?placeId=@place.Id">',
+            @:     '@place.Name',
+            @:     '</a>',
+            @:     '</p>',
+            @:     '<p>',
+            @:     '<img src="@place.Images.First(image => image.IsMain).Path" width="100px" height="100px" alt="">',
+            @:     '</p>',
+            @:     '</address>'
+            @:     ].join('')
+            @: });
+
+            i++;
+        }
+
+        let myClusterer = new ymaps.Clusterer(
+          {clusterDisableClickZoom: false}
+        );
+        myClusterer.add(myGeoObjects);
+        myMap.geoObjects.add(myClusterer);
+    }
+</script>
